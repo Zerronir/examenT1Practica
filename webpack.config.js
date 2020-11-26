@@ -1,9 +1,11 @@
+/* Examen WebPack */
 const webpack = require("webpack");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const mincss = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const minjs = require("terser-webpack-plugin");
+const {GenerateSW, InjectManifest} = require('workbox-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -71,6 +73,7 @@ module.exports = {
             chunkFilename: '[id].css'
         }),
         new htmlWebpackPlugin({
+            title: "WebApp",
             filename: "index.html",
             template: "./index.html"
         }),
@@ -80,6 +83,12 @@ module.exports = {
             'window.jQuery': 'jquery',
             Popper: ['popper.js', 'default']
         }),
+        // Ex8 - Crear PWA
+        new GenerateSW({
+                clientsClaim: true,
+                skipWaiting: true,
+                exclude: [/swagger-ui/]
+              }),
     ],
     // Exportamos al resultado
     output: {

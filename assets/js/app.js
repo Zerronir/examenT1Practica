@@ -1,3 +1,8 @@
+import { Workbox } from "workbox-window";
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { NetworkFirst } from 'workbox-strategies';
+
 const xc = "myChart";
 const ctx = document.querySelector("#" + xc);
 
@@ -27,3 +32,13 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').then(registration => {
+        console.log('SW registered: ', registration);
+      }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+    });
+  }
