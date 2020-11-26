@@ -1,3 +1,5 @@
+import xc from './vars.js'
+import ctx from './selector'
 
     const myChart = new Chart(ctx, {
         type: 'line',
